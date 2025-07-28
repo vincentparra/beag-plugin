@@ -17,27 +17,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Classifier {
-    private final MLPLoader modelLoader = new MLPLoader();
-    private final InputStream fileModelSave = getClass().getClassLoader().getResourceAsStream("modelv2.bin");
+    private final InputStream fileModelSave = getClass().getClassLoader().getResourceAsStream("modelv3.bin");
     private final MultiLayerNetwork model;
     private final DataAnalysis analysis;
     private final Schema targetSchema;
 
-//    private final MLPLoader modelLoader = new MLPLoader();
-//    private final File fileModelSave = new File("src/main/resources/modelv2.bin");
-//
-//    private final MultiLayerNetwork model = modelLoader.machineLoader();
-//    private final DataAnalysis analysis = DataAnalysis.fromJson(ModelSerializer.getObjectFromFile(fileModelSave, "analysis"));
-//    private final Schema targetSchema = Schema.fromJson(ModelSerializer.getObjectFromFile(fileModelSave, "schema"));
-
     public Classifier() {
         try {
-            InputStream modelStream = getClass().getClassLoader().getResourceAsStream("modelv2.bin");
+            InputStream modelStream = fileModelSave;
             if (modelStream == null) {
-                throw new IllegalStateException("modelv2.bin not found in classpath");
+                throw new IllegalStateException("model.bin not found in classpath");
             }
 
-            File tempModelFile = File.createTempFile("modelv2", ".bin");
+            File tempModelFile = File.createTempFile("model", ".bin");
             tempModelFile.deleteOnExit();
 
             java.nio.file.Files.copy(
@@ -47,10 +39,8 @@ public class Classifier {
             );
 
             this.model = ModelSerializer.restoreMultiLayerNetwork(tempModelFile);
-
             String analysisJson = (String) ModelSerializer.getObjectFromFile(tempModelFile, "analysis");
             this.analysis = DataAnalysis.fromJson(analysisJson);
-
             String schemaJson = (String) ModelSerializer.getObjectFromFile(tempModelFile, "schema");
             this.targetSchema = Schema.fromJson(schemaJson);
 
@@ -62,7 +52,6 @@ public class Classifier {
        List arrayList = Arrays.asList(lines,chars,token,ifStmt,tokenLength,method,methodLength,switchStmt,loop);
        List<Writable> record = RecordConverter.toRecord(schema(),arrayList);
        List<Writable> transformed = transformProcess(analysis).execute(record);
-       int aiCount = 0, humanCount = 0;
        INDArray data = RecordConverter.toArray(transformed);
        INDArray output = model.output(data, false);
        getPrediction(output);
@@ -86,7 +75,7 @@ public class Classifier {
    private TransformProcess transformProcess(DataAnalysis analysis){
        String[] newOrder = targetSchema.getColumnNames().stream().filter(it -> !it.equals("is_ai_generated")).toArray(String[]::new);
        return new TransformProcess.Builder(schema())
-               .removeColumns("numSwitchStmt","avgMethodLength")
+               .removeColumns("numSwitchStmt")
                .normalize("num_lines", Normalize.Standardize, analysis)
                .normalize("num_char", Normalize.Standardize, analysis)
                .normalize("num_tokens", Normalize.Standardize, analysis)
@@ -94,28 +83,16 @@ public class Classifier {
                .normalize("ave_tokens_length", Normalize.Standardize, analysis)
                .normalize("numMethods", Normalize.Standardize, analysis)
                .normalize("numOfLoops",Normalize.Standardize,analysis)
+               .normalize("avgMethodLength",Normalize.Standardize,analysis)
                .reorderColumns(newOrder)
                .build();
    }
    private void getPrediction(INDArray output){
        double probClass1 = output.getDouble(0, 1);
        double probClass0 = output.getDouble(0,0);
-       double threshold = 0.1;
+       double threshold = 0.3;
        int predictedClass = probClass1 >= threshold ? 1 : 0;
-       double aiCount = 0;
-       double humanCount = 0;
-
-       if (predictedClass == 1) {
-           aiCount++;
-       } else {
-           humanCount++;
-       }
-       double totalSegments = aiCount + humanCount;
-       double aiPercentage = (aiCount / totalSegments) * 100;
-       double humanPercentage = (humanCount / totalSegments) * 100;
-
        System.out.println("\n--- Results ---");
-       System.out.println("Raw Output Probabilities: " + output);
        System.out.println("Threshold: "+threshold*100 +"%");
        System.out.printf("Average Confidence for AI: %.2f%%\n", probClass1 * 100);
        System.out.printf("Average Confidence for Human: %.2f%%\n", probClass0 * 100);

@@ -5,13 +5,16 @@ import com.rocs.blocking.ai.generated.code.plugin.engine.Classifier;
 import com.rocs.blocking.ai.generated.code.plugin.features.FeatureExtractorInterface;
 import com.rocs.blocking.ai.generated.code.plugin.features.impl.FeatureExtractorInterfaceImpl;
 import com.rocs.blocking.ai.generated.code.plugin.reports.FeatureReportInterface;
+import org.apache.maven.api.di.Named;
+import org.apache.maven.api.di.Singleton;
 
 import java.nio.file.Path;
 import java.util.List;
-
+@Named
+@Singleton
 public class FeatureReportImpl implements FeatureReportInterface {
     @Override
-    public void getFeatures() {
+    public void getReports() {
         PathFinderImpl pathFinder = new PathFinderImpl();
         List<Path> paths = pathFinder.findPath();
         int numChar,numToken;
@@ -31,8 +34,8 @@ public class FeatureReportImpl implements FeatureReportInterface {
             System.out.println("Average method length  : "+featureExtractor.averageMethodLength(path));
             System.out.println("Number of Switch       : "+featureExtractor.countSwitchStmt(path));
             System.out.println("Number of Loops        : "+featureExtractor.countLoops(path));
-            System.out.println("<--------------------------------------------------------------------------------->");
             isInterface = featureExtractor.isInterface(path);
+            System.out.println("<--------------------------------------------------------------------------------->");
             if(!isInterface){
                 classifier.inputClassifier(featureExtractor.countNumberOfLines(path),
                         featureExtractor.countNumberOfChar(path),

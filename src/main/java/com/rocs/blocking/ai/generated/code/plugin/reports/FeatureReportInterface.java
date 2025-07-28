@@ -1,5 +1,8 @@
 package com.rocs.blocking.ai.generated.code.plugin.reports;
 
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+
 public interface FeatureReportInterface {
-    void getFeatures();
+    void getReports() throws MojoExecutionException, MojoFailureException;
 }
