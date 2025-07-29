@@ -1,13 +1,10 @@
-package com.rocs.blocking.ai.generated.code.plugin.features.impl;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.features.impl;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.*;
-import com.rocs.blocking.ai.generated.code.plugin.features.FeatureExtractorInterface;
-import com.rocs.blocking.ai.generated.code.plugin.reports.impl.FeatureReportImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.features.FeatureExtractorInterface;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

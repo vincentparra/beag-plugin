@@ -1,4 +1,4 @@
-package com.rocs.blocking.ai.generated.code.plugin.collector;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.collector;
 
 import java.nio.file.Path;
 import java.util.List;

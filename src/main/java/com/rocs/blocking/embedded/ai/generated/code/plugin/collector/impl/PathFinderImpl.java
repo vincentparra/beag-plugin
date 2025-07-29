@@ -1,6 +1,6 @@
-package com.rocs.blocking.ai.generated.code.plugin.collector.impl;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.collector.impl;
 
-import com.rocs.blocking.ai.generated.code.plugin.collector.PathFinderInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.PathFinderInterface;
 
 import java.io.IOException;
 import java.nio.file.Files;

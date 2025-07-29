@@ -1,4 +1,4 @@
-package com.rocs.blocking.ai.generated.code.plugin.features;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.features;
 
 import java.nio.file.Path;
 

@@ -1,7 +1,7 @@
-package com.rocs.blocking.ai.generated.code.plugin;
+package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
-import com.rocs.blocking.ai.generated.code.plugin.reports.FeatureReportInterface;
-import com.rocs.blocking.ai.generated.code.plugin.reports.impl.FeatureReportImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl.FeatureReportImpl;
 import org.apache.maven.api.di.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

@@ -1,4 +1,4 @@
-package com.rocs.blocking.ai.generated.code.plugin.engine;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.engine;
 
 import org.datavec.api.transform.TransformProcess;
 import org.datavec.api.transform.analysis.DataAnalysis;

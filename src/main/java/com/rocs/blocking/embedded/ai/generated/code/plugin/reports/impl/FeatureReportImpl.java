@@ -1,10 +1,10 @@
-package com.rocs.blocking.ai.generated.code.plugin.reports.impl;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl;
 
-import com.rocs.blocking.ai.generated.code.plugin.collector.impl.PathFinderImpl;
-import com.rocs.blocking.ai.generated.code.plugin.engine.Classifier;
-import com.rocs.blocking.ai.generated.code.plugin.features.FeatureExtractorInterface;
-import com.rocs.blocking.ai.generated.code.plugin.features.impl.FeatureExtractorInterfaceImpl;
-import com.rocs.blocking.ai.generated.code.plugin.reports.FeatureReportInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.impl.PathFinderImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.engine.Classifier;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.features.FeatureExtractorInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.features.impl.FeatureExtractorInterfaceImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
 
