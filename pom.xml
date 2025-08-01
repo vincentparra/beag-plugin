@@ -6,7 +6,7 @@
 
     <groupId>com.github.vincentparra</groupId>
     <artifactId>BEAG-plugin</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.5</version>
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
     <description>A plugin that detects AI generated code</description>
