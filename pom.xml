@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rocs</groupId>
     <artifactId>blocking-embedded-ai-generated-code-plugin</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.1</version>
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
     <description>A plugin that detects AI generated code</description>
