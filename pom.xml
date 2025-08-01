@@ -3,9 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.github.vincentparra</groupId>
     <artifactId>BEAG-plugin</artifactId>
     <version>1.0.1</version>
+
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
     <description>A plugin that detects AI generated code</description>
@@ -14,6 +16,9 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.build.timestamp.format.yyyy>2025</maven.build.timestamp.format.yyyy>
+        <main.class>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</main.class>
     </properties>
 
     <repositories>
@@ -66,7 +71,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</mainClass>
+                                <mainClass>${main.class}</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
@@ -90,6 +95,52 @@
                                     </transformer>
                                 </transformers>
                             </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.6.3</version>
+                    <configuration>
+                        <failOnError>false</failOnError>
+                        <outputDirectory>${project.build.directory}/docs</outputDirectory>
+                        <reportOutputDirectory>${project.reporting.outputDirectory}/javadoc</reportOutputDirectory>
+                        <destDir>javadoc</destDir>
+                        <windowtitle>Blocking Embedded AI Generated Code (BEAG) Plugin Documentation</windowtitle>
+                        <doctitle><![CDATA[Blocking Embedded AI Generated Code (BEAG) Plugin Documentation - ${project.version}]]></doctitle>
+                        <top><![CDATA[Blocking Embedded AI Generated Code (BEAG) Plugin Documentation - ${project.version}]]></top>
+                        <bottom><![CDATA[Copyright © ${maven.build.timestamp.format.yyyy}. All Rights Reserved.]]></bottom>
+                        <groups>
+                            <group>
+                                <title>Collector</title>
+                                <packages>com.rocs.blocking.embedded.ai.generated.code.plugin.collector.*</packages>
+                            </group>
+                            <group>
+                                <title>Engine</title>
+                                <packages>com.rocs.blocking.embedded.ai.generated.code.plugin.engine.*</packages>
+                            </group>
+                            <group>
+                                <title>Features</title>
+                                <packages>com.rocs.blocking.embedded.ai.generated.code.plugin.features.*</packages>
+                            </group>
+                            <group>
+                                <title>Reports</title>
+                                <packages>com.rocs.blocking.embedded.ai.generated.code.plugin.reports.*</packages>
+                            </group>
+                        </groups>
+                        <sourceFileIncludes>
+                            <include>com/rocs/blocking/embedded/ai/generated/code/plugin/**/*.java</include>
+                        </sourceFileIncludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>generate-javadoc</id>
+                            <phase>site</phase>
+                            <goals>
+                                <goal>javadoc</goal>
+                            </goals>
                         </execution>
                     </executions>
                 </plugin>

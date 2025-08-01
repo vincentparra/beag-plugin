@@ -1,8 +1,8 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
 import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.impl.PathFinderImpl;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl.FeatureReportImpl;
+import org.apache.maven.api.di.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -17,22 +17,33 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * This class serves as the Mojo for the BEAG plugin that detects {@code AI generated code}
+ * */
 @Mojo(name = "detect", defaultPhase = LifecyclePhase.COMPILE)
 public class AIDetectorMojo extends AbstractMojo {
 
     @Parameter(property = "changedFiles")
     private String changedFiles;
 
+    @Parameter(property = "sourceRoot",defaultValue = "src/main")
+    private String sourceRootPath;
+
     @Parameter(defaultValue = "${project}", readonly = true)
     private MavenProject project;
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
+    @Inject
+    private FeatureReportImpl report;
+    @Inject
+    private PathFinderImpl pathFinder;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
+
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        pathFinder = new PathFinderImpl();
         try {
-            PathFinderImpl pathFinder = new PathFinderImpl();
             if (changedFiles != null && !changedFiles.trim().isEmpty()) {
                 List<String> fileList = Arrays.stream(changedFiles.split(","))
                         .map(String::trim)
@@ -41,7 +52,7 @@ public class AIDetectorMojo extends AbstractMojo {
                 pathFinder.setChangedFiles(fileList);
             } else {
                 LOGGER.info("No changed files passed. Scanning entire project.");
-                pathFinder.setPath("src/main");
+                pathFinder.setSourceRootPath(sourceRootPath);
             }
 
             List<Path> javaFiles = pathFinder.findPath();
@@ -53,10 +64,10 @@ public class AIDetectorMojo extends AbstractMojo {
 
             LOGGER.info("Found " + javaFiles.size() + " Java file(s) to analyze.");
 
-            FeatureReportInterface report = new FeatureReportImpl();
+            report = new FeatureReportImpl();
             report.getReports(javaFiles);
 
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             throw new MojoExecutionException("Error while running AI Detector plugin", e);
         }
     }
