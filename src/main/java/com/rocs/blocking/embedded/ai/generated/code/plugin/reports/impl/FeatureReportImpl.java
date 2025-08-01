@@ -7,6 +7,7 @@ import com.rocs.blocking.embedded.ai.generated.code.plugin.features.impl.Feature
 import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
+import org.apache.maven.plugin.MojoFailureException;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Singleton
 public class FeatureReportImpl implements FeatureReportInterface {
     @Override
-    public void getReports(List<Path> javaFiles) {
+    public void getReports(List<Path> javaFiles) throws MojoFailureException {
         List<Path> paths = javaFiles;
         int numChar,numToken;
         boolean isInterface;
