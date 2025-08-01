@@ -182,5 +182,4 @@
             <url>https://maven.pkg.github.com/vincentparra/BEAG-plugin</url>
         </repository>
     </distributionManagement>
-
 </project>
