@@ -14,9 +14,8 @@ import java.util.List;
 @Singleton
 public class FeatureReportImpl implements FeatureReportInterface {
     @Override
-    public void getReports() {
-        PathFinderImpl pathFinder = new PathFinderImpl();
-        List<Path> paths = pathFinder.findPath();
+    public void getReports(List<Path> javaFiles) {
+        List<Path> paths = javaFiles;
         int numChar,numToken;
         boolean isInterface;
         for(Path path: paths){

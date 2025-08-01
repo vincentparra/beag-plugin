@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.vincentparra</groupId>
-    <artifactId>BEAG-plugin</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <groupId>com.rocs</groupId>
+    <artifactId>blocking-embedded-ai-generated-code-plugin</artifactId>
+    <version>1.0.3</version>
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
     <description>A plugin that detects AI generated code</description>
