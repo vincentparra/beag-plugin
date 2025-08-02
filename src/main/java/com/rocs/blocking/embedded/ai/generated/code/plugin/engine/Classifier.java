@@ -1,6 +1,5 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.engine;
 
-import com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.datavec.api.transform.TransformProcess;
 import org.datavec.api.transform.analysis.DataAnalysis;
@@ -11,7 +10,6 @@ import org.datavec.api.writable.Writable;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nd4j.shade.protobuf.ByteString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,11 +29,9 @@ public class Classifier {
     private final Schema targetSchema;
     /**
      * Constructs a {@code Classifier} by loading a pre-trained DL4J model from a binary file.
-     *
      * This constructor attempts to retrieve a model binary file (expected to be assigned to {@code fileModelSave}),
      * creates a temporary file to store its contents, and then restores a {@link org.deeplearning4j.nn.multilayer.MultiLayerNetwork}
      * instance from it. Additionally, it extracts associated analysis and schema metadata embedded in the model file.
-     *
      *
      *
      * Expected resources inside the model file:
@@ -82,26 +78,25 @@ public class Classifier {
      * according to the original data schema and analysis used during training, and passes
      * the processed data to the neural network for prediction.
      *
-     *
-     * @param lines         the number of lines in the source code file
-     * @param chars         the number of characters in the source code file
-     * @param token         the total number of tokens in the file
-     * @param ifStmt        the number of 'if' statements
-     * @param tokenLength   the average length of tokens
-     * @param method        the number of methods in the file
-     * @param methodLength  the average length of method bodies
-     * @param switchStmt    the number of 'switch' statements
-     * @param loop          the number of loop constructs (e.g., for, while)
-     *
+     * @param lines        the number of lines in the source code file
+     * @param chars        the number of characters in the source code file
+     * @param token        the total number of tokens in the file
+     * @param ifStmt       the number of 'if' statements
+     * @param tokenLength  the average length of tokens
+     * @param method       the number of methods in the file
+     * @param methodLength the average length of method bodies
+     * @param switchStmt   the number of 'switch' statements
+     * @param loop         the number of loop constructs (e.g., for, while)
+     * @param isFailable   a boolean value that specifies if the detector will fail on build when there is an AI generated code
      * @throws RuntimeException if transformation or prediction fails
      */
-   public void inputClassifier(int lines,int chars, int token, int ifStmt, double tokenLength,int method,int methodLength,int switchStmt, int loop) throws MojoFailureException {
+   public void inputClassifier(int lines,int chars, int token, int ifStmt, double tokenLength,int method,int methodLength,int switchStmt, int loop,boolean isFailable) throws MojoFailureException {
        List arrayList = Arrays.asList(lines,chars,token,ifStmt,tokenLength,method,methodLength,switchStmt,loop);
        List<Writable> record = RecordConverter.toRecord(schema(),arrayList);
        List<Writable> transformed = transformProcess(analysis).execute(record);
        INDArray data = RecordConverter.toArray(transformed);
        INDArray output = model.output(data, false);
-       getPrediction(output);
+       getPrediction(output,isFailable);
    }
 
    private Schema schema(){
@@ -134,7 +129,7 @@ public class Classifier {
                .reorderColumns(newOrder)
                .build();
    }
-   private void getPrediction(INDArray output) throws MojoFailureException {
+   private void getPrediction(INDArray output, boolean isFailable) throws MojoFailureException {
        double probClass1 = output.getDouble(0, 1);
        double probClass0 = output.getDouble(0,0);
        double threshold = 0.3;
@@ -144,10 +139,11 @@ public class Classifier {
        System.out.printf("Average Confidence for AI: %.2f%%\n", probClass1 * 100);
        System.out.printf("Average Confidence for Human: %.2f%%\n", probClass0 * 100);
        System.out.println("Classification: "+(predictedClass == 1 ? "Contains AI generated Code":"Human Written Code"));
-       if(predictedClass == 1){
+
+       if(predictedClass == 1 && isFailable){
             throw new MojoFailureException("Contains AI generated Code");
-        }else{
-            System.out.println("Human Written Code");
-        }
+       }else{
+           System.out.println("Human Written Code");
+       }
    }
 }
