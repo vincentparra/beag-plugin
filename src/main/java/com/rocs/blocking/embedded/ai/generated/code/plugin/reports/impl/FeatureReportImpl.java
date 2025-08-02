@@ -7,14 +7,20 @@ import com.rocs.blocking.embedded.ai.generated.code.plugin.features.impl.Feature
 import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
+import org.apache.maven.plugin.MojoFailureException;
 
 import java.nio.file.Path;
 import java.util.List;
+
+/**
+ * This class is the implementation of {@code FeatureReportInterface}
+ * these handles the reporting of the plugin and serve as the text-based UI that prints out the
+ */
 @Named
 @Singleton
 public class FeatureReportImpl implements FeatureReportInterface {
     @Override
-    public void getReports(List<Path> javaFiles) {
+    public void getReports(List<Path> javaFiles,boolean isFailable) throws MojoFailureException {
         List<Path> paths = javaFiles;
         int numChar,numToken;
         boolean isInterface;
@@ -44,7 +50,8 @@ public class FeatureReportImpl implements FeatureReportInterface {
                         featureExtractor.countMethods(path),
                         featureExtractor.averageMethodLength(path),
                         featureExtractor.countSwitchStmt(path),
-                        featureExtractor.countLoops(path));
+                        featureExtractor.countLoops(path),
+                        isFailable);
             }else{
                 System.out.println("Unable to measure interface: no logic inside");
             }

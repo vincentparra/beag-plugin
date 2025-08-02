@@ -5,6 +5,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.*;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.features.FeatureExtractorInterface;
+import org.apache.maven.api.di.Named;
+import org.apache.maven.api.di.Singleton;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,6 +14,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * This handles the Feature extraction
+ */
+@Named
+@Singleton
 public class FeatureExtractorInterfaceImpl implements FeatureExtractorInterface {
 
     @Override
