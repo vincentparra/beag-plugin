@@ -18,8 +18,9 @@ public interface FeatureReportInterface {
      * </p>
      *
      * @param javaFiles the list of Java source files retrieved from the GitHub repository
+     * @param isFailable is a boolean that specifies if the plugin will fail the build process when detected an AI generated Code
      * @throws MojoExecutionException if an error occurs during plugin execution
      * @throws MojoFailureException if the plugin fails to complete the classification task
      */
-    void getReports(List<Path> javaFiles) throws MojoExecutionException, MojoFailureException;
+    void getReports(List<Path> javaFiles,boolean isFailable) throws MojoExecutionException, MojoFailureException;
 }

@@ -19,9 +19,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 /**
  * This class serves as the Mojo for the BEAG plugin that detects {@code AI generated code}
+ * this class extends with the {@code AbstractMojo} Interface to implement the {@code execute} class
+ * making the plugin runnable using this class as an entry point
  * */
 @Mojo(name = "detect", defaultPhase = LifecyclePhase.COMPILE)
 public class AIDetectorMojo extends AbstractMojo {
+    @Parameter(defaultValue = "${project}", readonly = true)
+    private MavenProject project;
 
     @Parameter(property = "changedFiles")
     private String changedFiles;
@@ -29,16 +33,15 @@ public class AIDetectorMojo extends AbstractMojo {
     @Parameter(property = "sourceRoot",defaultValue = "src/main")
     private String sourceRootPath;
 
-    @Parameter(defaultValue = "${project}", readonly = true)
-    private MavenProject project;
+    @Parameter(property = "failOnAi",defaultValue = "true")
+    private boolean isFailable;
 
     @Inject
     private FeatureReportImpl report;
     @Inject
     private PathFinderImpl pathFinder;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -63,9 +66,8 @@ public class AIDetectorMojo extends AbstractMojo {
             }
 
             LOGGER.info("Found " + javaFiles.size() + " Java file(s) to analyze.");
-
             report = new FeatureReportImpl();
-            report.getReports(javaFiles);
+            report.getReports(javaFiles,isFailable);
 
         } catch (NullPointerException e) {
             throw new MojoExecutionException("Error while running AI Detector plugin", e);
