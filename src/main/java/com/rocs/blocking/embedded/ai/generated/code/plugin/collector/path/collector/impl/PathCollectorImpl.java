@@ -1,6 +1,6 @@
-package com.rocs.blocking.embedded.ai.generated.code.plugin.collector.impl;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.impl;
 
-import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.PathFinderInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.PathCollector;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
 
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Named
 @Singleton
-public class PathFinderImpl implements PathFinderInterface {
+public class PathCollectorImpl implements PathCollector {
 
     private String sourceRootPath;
     private List<String> changedFiles;
