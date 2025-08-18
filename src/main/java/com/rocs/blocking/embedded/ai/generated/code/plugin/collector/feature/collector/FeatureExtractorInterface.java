@@ -1,11 +1,9 @@
-package com.rocs.blocking.embedded.ai.generated.code.plugin.features;
-
-import org.apache.maven.plugin.MojoFailureException;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.collector.feature.collector;
 
 import java.nio.file.Path;
 
 /**
- * this handles the method used for extracting features
+ * this handles the method used for extracting feature
  */
 public interface FeatureExtractorInterface {
     /**

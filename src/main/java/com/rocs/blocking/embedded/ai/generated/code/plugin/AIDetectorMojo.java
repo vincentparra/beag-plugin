@@ -1,6 +1,6 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
-import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.impl.PathFinderImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.impl.PathCollectorImpl;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl.FeatureReportImpl;
 import org.apache.maven.api.di.Inject;
 import org.apache.maven.plugin.AbstractMojo;
@@ -13,6 +13,7 @@ import org.apache.maven.project.MavenProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -39,13 +40,13 @@ public class AIDetectorMojo extends AbstractMojo {
     @Inject
     private FeatureReportImpl report;
     @Inject
-    private PathFinderImpl pathFinder;
+    private PathCollectorImpl pathFinder;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        pathFinder = new PathFinderImpl();
+        pathFinder = new PathCollectorImpl();
         try {
             if (changedFiles != null && !changedFiles.trim().isEmpty()) {
                 List<String> fileList = Arrays.stream(changedFiles.split(","))
@@ -71,6 +72,8 @@ public class AIDetectorMojo extends AbstractMojo {
 
         } catch (NullPointerException e) {
             throw new MojoExecutionException("Error while running AI Detector plugin", e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

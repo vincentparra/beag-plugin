@@ -1,14 +1,15 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl;
 
-import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.impl.PathFinderImpl;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.engine.Classifier;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.features.FeatureExtractorInterface;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.features.impl.FeatureExtractorInterfaceImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.input.Input;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.classifier.Classifier;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.feature.collector.FeatureExtractorInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.feature.collector.impl.FeatureExtractorInterfaceImpl;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
 import org.apache.maven.plugin.MojoFailureException;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @Singleton
 public class FeatureReportImpl implements FeatureReportInterface {
     @Override
-    public void getReports(List<Path> javaFiles,boolean isFailable) throws MojoFailureException {
+    public void getReports(List<Path> javaFiles,boolean isFailable) throws MojoFailureException, IOException {
         List<Path> paths = javaFiles;
         int numChar,numToken;
         boolean isInterface;
@@ -42,16 +43,17 @@ public class FeatureReportImpl implements FeatureReportInterface {
             isInterface = featureExtractor.isInterface(path);
             System.out.println("<--------------------------------------------------------------------------------->");
             if(!isInterface){
-                classifier.inputClassifier(featureExtractor.countNumberOfLines(path),
-                        featureExtractor.countNumberOfChar(path),
-                        featureExtractor.countNumberOfToken(path),
-                        featureExtractor.countIfStatement(path),
-                        featureExtractor.countAverageTokenLength(numChar,numToken),
-                        featureExtractor.countMethods(path),
-                        featureExtractor.averageMethodLength(path),
-                        featureExtractor.countSwitchStmt(path),
-                        featureExtractor.countLoops(path),
-                        isFailable);
+                Input inputs = new Input();
+                inputs.setLines(featureExtractor.countNumberOfLines(path));
+                inputs.setChars(featureExtractor.countNumberOfChar(path));
+                inputs.setToken(featureExtractor.countNumberOfToken(path));
+                inputs.setIfStmt(featureExtractor.countIfStatement(path));
+                inputs.setTokenLength(featureExtractor.countAverageTokenLength(numChar,numToken));
+                inputs.setMethod(featureExtractor.countMethods(path));
+                inputs.setMethodLength(featureExtractor.averageMethodLength(path));
+                inputs.setSwitchStmt( featureExtractor.countSwitchStmt(path));
+                inputs.setLoop(featureExtractor.countLoops(path));
+                classifier.predict(inputs,isFailable);
             }else{
                 System.out.println("Unable to measure interface: no logic inside");
             }
