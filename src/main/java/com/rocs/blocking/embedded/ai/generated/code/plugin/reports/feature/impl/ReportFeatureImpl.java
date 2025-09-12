@@ -1,25 +1,27 @@
-package com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.reports.feature.impl;
 
 import com.rocs.blocking.embedded.ai.generated.code.plugin.input.Input;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.classifier.Classifier;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.feature.collector.FeatureExtractorInterface;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.feature.collector.impl.FeatureExtractorInterfaceImpl;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.FeatureReportInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.feature.ReportFeatureInterface;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.prediction.Prediction;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
 import org.apache.maven.plugin.MojoFailureException;
+import org.nd4j.linalg.api.ndarray.INDArray;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
 /**
- * This class is the implementation of {@code FeatureReportInterface}
+ * This class is the implementation of {@code ReportFeatureInterface}
  * these handles the reporting of the plugin and serve as the text-based UI that prints out the
  */
 @Named
 @Singleton
-public class FeatureReportImpl implements FeatureReportInterface {
+public class ReportFeatureImpl implements ReportFeatureInterface {
     @Override
     public void getReports(List<Path> javaFiles,boolean isFailable) throws MojoFailureException, IOException {
         List<Path> paths = javaFiles;
@@ -28,6 +30,7 @@ public class FeatureReportImpl implements FeatureReportInterface {
         for(Path path: paths){
             FeatureExtractorInterface featureExtractor = new FeatureExtractorInterfaceImpl();
             Classifier classifier = new Classifier();
+            Prediction prediction = new Prediction();
             System.out.println(path);
             System.out.println("Number of lines        : "+featureExtractor.countNumberOfLines(path));
             System.out.println("Number of Character    : "+featureExtractor.countNumberOfChar(path));
@@ -53,11 +56,13 @@ public class FeatureReportImpl implements FeatureReportInterface {
                 inputs.setMethodLength(featureExtractor.averageMethodLength(path));
                 inputs.setSwitchStmt( featureExtractor.countSwitchStmt(path));
                 inputs.setLoop(featureExtractor.countLoops(path));
-                classifier.predict(inputs,isFailable);
+                INDArray output = classifier.outputClassifier(inputs);
+                System.out.println(prediction.getPrediction(output,isFailable));
             }else{
                 System.out.println("Unable to measure interface: no logic inside");
             }
             System.out.println("<--------------------------------------------------------------------------------->");
         }
     }
+
 }

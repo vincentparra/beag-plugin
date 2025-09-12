@@ -1,7 +1,7 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
 import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.impl.PathCollectorImpl;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.impl.FeatureReportImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.feature.impl.ReportFeatureImpl;
 import org.apache.maven.api.di.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -10,6 +10,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.jline.utils.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,9 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.utils.Constant.MODEL_SAVE;
+
 /**
  * This class serves as the Mojo for the BEAG plugin that detects {@code AI generated code}
  * this class extends with the {@code AbstractMojo} Interface to implement the {@code execute} class
@@ -38,7 +42,7 @@ public class AIDetectorMojo extends AbstractMojo {
     private boolean isFailable;
 
     @Inject
-    private FeatureReportImpl report;
+    private ReportFeatureImpl report;
     @Inject
     private PathCollectorImpl pathFinder;
 
@@ -67,7 +71,7 @@ public class AIDetectorMojo extends AbstractMojo {
             }
 
             LOGGER.info("Found " + javaFiles.size() + " Java file(s) to analyze.");
-            report = new FeatureReportImpl();
+            report = new ReportFeatureImpl();
             report.getReports(javaFiles,isFailable);
 
         } catch (NullPointerException e) {

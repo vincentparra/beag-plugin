@@ -1,15 +1,15 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.input;
 
 public class Input {
-    int lines;
-    int chars;
-    int token;
-    int ifStmt;
-    double tokenLength;
-    int method;
-    int methodLength;
-    int switchStmt;
-    int loop;
+   private int lines;
+   private int chars;
+   private int token;
+   private int ifStmt;
+   private double tokenLength;
+   private int method;
+   private int methodLength;
+   private int switchStmt;
+   private int loop;
 
     public int getLines() {
         return lines;

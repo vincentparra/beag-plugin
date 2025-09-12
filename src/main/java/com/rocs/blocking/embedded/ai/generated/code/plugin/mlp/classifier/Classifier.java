@@ -36,19 +36,11 @@ public class Classifier {
         this.loadEngine = new LoadEngineHelper();
         this.model = loadEngine.getModel();
     }
-    /**
-     * Processes and classifies a set of extracted code metrics using the pre-trained model.
-     * This method prepares a feature vector from the provided metrics, transforms the input
-     * according to the original data schema and analysis used during training, and passes
-     * the processed data to the neural network for prediction.
-     *
-     * @throws RuntimeException if transformation or prediction fails
-     */
-   public void predict(Input inputs, boolean isFailable) throws MojoFailureException {
-       INDArray data = RecordConverter.toArray(transformed(inputs));
-       INDArray output = model.output(data, false);
-       getPrediction(output,isFailable);
-   }
+
+    public INDArray outputClassifier(Input inputs){
+        INDArray data = RecordConverter.toArray(transformed(inputs));
+        return model.output(data, false);
+    }
 
     private List<Writable> transformed(Input inputs){
         List arrayList = Arrays.asList(inputs.getLines(),inputs.getChars(),inputs.getToken(),inputs.getIfStmt(),inputs.getTokenLength(),inputs.getMethod(),inputs.getMethodLength(),inputs.getMethodLength(),inputs.getLoop());
@@ -88,18 +80,6 @@ public class Classifier {
                .build();
    }
 
-   private void getPrediction(INDArray output, boolean isFailable) throws MojoFailureException {
-       double probClass1 = output.getDouble(0, 1);
-       double probClass0 = output.getDouble(0,0);
-       double threshold = 0.3;
-       int predictedClass = probClass1 >= threshold ? 1 : 0;
-       System.out.println("\n--- Results ---");
-       System.out.println("Threshold: "+threshold*100 +"%");
-       System.out.printf("Average Confidence for AI: %.2f%%\n", probClass1 * 100);
-       System.out.printf("Average Confidence for Human: %.2f%%\n", probClass0 * 100);
-       System.out.println("Classification: "+(predictedClass == 1 ? "Contains AI generated Code" : "Human Written Code"));
-       if(predictedClass == 1 && isFailable){
-            throw new MojoFailureException("Contains AI generated Code");
-       }
-   }
+
+
 }
