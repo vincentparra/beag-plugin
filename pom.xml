@@ -6,7 +6,7 @@
 
     <groupId>com.github.vincentparra</groupId>
     <artifactId>BEAG-plugin</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
@@ -16,7 +16,6 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <maven.build.timestamp.format.yyyy>2025</maven.build.timestamp.format.yyyy>
         <main.class>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</main.class>
     </properties>

@@ -1,4 +1,4 @@
-package com.rocs.blocking.embedded.ai.generated.code.plugin.reports;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.reports.feature;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * this handles the reporting of the plugin
  */
-public interface FeatureReportInterface {
+public interface ReportFeatureInterface {
     /**
      * Executes classification on a list of Java source files retrieved from a GitHub repository.
      * <p>
