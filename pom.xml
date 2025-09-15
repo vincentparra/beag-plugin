@@ -6,7 +6,7 @@
 
     <groupId>com.github.vincentparra</groupId>
     <artifactId>beag-plugin</artifactId>
-    <version>2.0.4</version>
+    <version>2.0.5</version>
 
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
@@ -20,16 +20,6 @@
         <main.class>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</main.class>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/vincentparra/BEAG-plugin</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <build>
         <directory>build</directory>
         <resources>
@@ -40,58 +30,56 @@
                 </includes>
             </resource>
         </resources>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-plugin-plugin</artifactId>
-            <version>3.15.1</version>
-            <configuration>
-                <goalPrefix>beag</goalPrefix>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>descriptor</id>
-                    <goals>
-                        <goal>descriptor</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.15.1</version>
+                <configuration>
+                    <goalPrefix>beag</goalPrefix>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>descriptor</id>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>3.3.0</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <createDependencyReducedPom>false</createDependencyReducedPom>
-                        <transformers>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                <mainClass>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</mainClass>
-                            </transformer>
-                        </transformers>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
-
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
             <version>3.15.1</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
@@ -109,34 +97,39 @@
             <artifactId>javaparser-core</artifactId>
             <version>3.24.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>1.9.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.24.3</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j2-impl</artifactId>
             <version>2.24.3</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.24.3</version>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.17</version>
         </dependency>
-        <!-- Deep learning Dependencies -->
 
+        <!-- Deep learning Dependencies -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
             <artifactId>deeplearning4j-nn</artifactId>
@@ -148,20 +141,19 @@
             <artifactId>nd4j-native</artifactId>
             <version>1.0.0-M2.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.datavec</groupId>
             <artifactId>datavec-api</artifactId>
             <version>1.0.0-M2.1</version>
         </dependency>
-
     </dependencies>
 
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub vincentparra Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/vincentparra/BEAG-plugin</url>
+            <url>https://maven.pkg.github.com/vincentparra/beag-plugin</url>
         </repository>
     </distributionManagement>
-
 </project>
