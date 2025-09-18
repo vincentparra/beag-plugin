@@ -1,5 +1,6 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.reports.prediction;
 
+import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.AIFoundException;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.input.Input;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.classifier.Classifier;
 import org.apache.maven.plugin.MojoFailureException;
@@ -14,7 +15,14 @@ public class Prediction {
         double threshold = 0.3;
         int predictedClass = probClass1 >= threshold ? 1 : 0;
         if(predictedClass == 1 && isFailable){
-            throw new MojoFailureException("Contains AI generated Code");
+            System.out.println("\n--- Results ---\n" +
+                    "Threshold: " + threshold * 100 + "%\n" +
+                    "Average Confidence for AI: " + probClass1 * 100 + "%\n" +
+                    "Average Confidence for Human: " + probClass0 * 100 + "%\n" +
+                    "Classification: " + (predictedClass == 1
+                    ? "Contains AI generated Code"
+                    : "Human Written Code"));
+            throw new AIFoundException("Contains AI generated Code");
         }
         output.close();
 
