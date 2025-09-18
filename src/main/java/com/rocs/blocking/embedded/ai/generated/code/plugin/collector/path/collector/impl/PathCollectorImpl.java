@@ -1,6 +1,7 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.impl;
 
 import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.PathCollector;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.SourceRootNotFoundException;
 import org.apache.maven.api.di.Named;
 import org.apache.maven.api.di.Singleton;
 
@@ -27,7 +28,7 @@ public class PathCollectorImpl implements PathCollector {
     }
 
     @Override
-    public List<Path> findPath() {
+    public List<Path> findPath() throws SourceRootNotFoundException {
         try {
             if (changedFiles != null && !changedFiles.isEmpty()) {
                 return changedFiles.stream()
@@ -37,7 +38,7 @@ public class PathCollectorImpl implements PathCollector {
             }
 
             if (sourceRootPath == null || sourceRootPath.trim().isEmpty()) {
-                throw new IllegalStateException("source root path is not set and no changed files were provided.");
+                throw new SourceRootNotFoundException("source root path is not set and no changed files were provided.");
             }
             Path sourceRoot = Paths.get(this.sourceRootPath);
             return Files.walk(sourceRoot)

@@ -1,5 +1,7 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.loader;
 
+import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.ModelNotFoundException;
+
 import java.io.File;
 import java.io.InputStream;
 
@@ -10,7 +12,7 @@ public class MultiLayerPerceptronModelLoader {
         try {
             InputStream modelStream = fileModelSave;
             if (modelStream == null) {
-                throw new IllegalStateException("model.bin not found in classpath");
+                throw new ModelNotFoundException("model.bin not found in classpath");
             }
 
             tempModelFile = File.createTempFile("model", ".bin");

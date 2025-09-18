@@ -1,6 +1,7 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
 import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.impl.PathCollectorImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.FileNotFoundException;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.feature.impl.ReportFeatureImpl;
 import org.apache.maven.api.di.Inject;
 import org.apache.maven.plugin.AbstractMojo;
@@ -67,7 +68,7 @@ public class AIDetectorMojo extends AbstractMojo {
 
             if (javaFiles.isEmpty()) {
                 LOGGER.warn("No Java files found to scan.");
-                return;
+                throw new FileNotFoundException("No Java files found to scan.");
             }
 
             LOGGER.info("Found " + javaFiles.size() + " Java file(s) to analyze.");
