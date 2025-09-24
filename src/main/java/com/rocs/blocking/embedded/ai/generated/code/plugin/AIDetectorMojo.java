@@ -30,6 +30,8 @@ import static com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.utils.Cons
  * */
 @Mojo(name = "detect", defaultPhase = LifecyclePhase.COMPILE)
 public class AIDetectorMojo extends AbstractMojo {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
+
     @Parameter(defaultValue = "${project}", readonly = true)
     private MavenProject project;
 
@@ -42,12 +44,13 @@ public class AIDetectorMojo extends AbstractMojo {
     @Parameter(property = "failOnAi",defaultValue = "true")
     private boolean isFailable;
 
+    @Parameter(property = "threshold", defaultValue = "0.30")
+    private double threshold;
+
     @Inject
     private ReportFeatureImpl report;
     @Inject
     private PathCollectorImpl pathFinder;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -73,7 +76,7 @@ public class AIDetectorMojo extends AbstractMojo {
 
             LOGGER.info("Found " + javaFiles.size() + " Java file(s) to analyze.");
             report = new ReportFeatureImpl();
-            report.getReports(javaFiles,isFailable);
+            report.getReports(javaFiles,isFailable,threshold);
 
         } catch (NullPointerException e) {
             throw new MojoExecutionException("Error while running AI Detector plugin", e);
