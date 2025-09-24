@@ -6,7 +6,7 @@
 
     <groupId>com.github.vincentparra</groupId>
     <artifactId>beag-plugin</artifactId>
-    <version>2.0.6</version>
+    <version>2.1.6</version>
 
     <packaging>maven-plugin</packaging>
     <name>beag-plugin</name>
@@ -63,6 +63,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.rocs.blocking.embedded.ai.generated.code.plugin.AIDetectorMojo</mainClass>
+                                    <mainClass>com.rocs.blocking.embedded.ai.generated.code.plugin.PluginInstallerMojo</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
