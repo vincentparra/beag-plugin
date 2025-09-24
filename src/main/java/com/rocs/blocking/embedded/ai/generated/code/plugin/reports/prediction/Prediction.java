@@ -9,10 +9,10 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import java.io.IOException;
 
 public class Prediction {
-    public String getPrediction(INDArray output, boolean isFailable) throws MojoFailureException {
+    public String getPrediction(INDArray output, boolean isFailable,double threshold) throws MojoFailureException {
         double probClass1 = output.getDouble(0, 1);
         double probClass0 = output.getDouble(0,0);
-        double threshold = 0.3;
+//        double threshold = 0.3;
         int predictedClass = probClass1 >= threshold ? 1 : 0;
         if(predictedClass == 1 && isFailable){
             System.out.println("\n--- Results ---\n" +

@@ -23,5 +23,5 @@ public interface ReportFeatureInterface {
      * @throws MojoExecutionException if an error occurs during plugin execution
      * @throws MojoFailureException if the plugin fails to complete the classification task
      */
-    void getReports(List<Path> javaFiles,boolean isFailable) throws MojoExecutionException, MojoFailureException, IOException;
+    void getReports(List<Path> javaFiles,boolean isFailable,double threshold) throws MojoExecutionException, MojoFailureException, IOException;
 }

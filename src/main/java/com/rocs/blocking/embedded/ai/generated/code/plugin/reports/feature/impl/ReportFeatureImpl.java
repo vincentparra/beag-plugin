@@ -23,7 +23,7 @@ import java.util.List;
 @Singleton
 public class ReportFeatureImpl implements ReportFeatureInterface {
     @Override
-    public void getReports(List<Path> javaFiles,boolean isFailable) throws MojoFailureException, IOException {
+    public void getReports(List<Path> javaFiles,boolean isFailable, double threshold) throws MojoFailureException, IOException {
         List<Path> paths = javaFiles;
         int numChar,numToken;
         boolean isInterface;
@@ -57,7 +57,7 @@ public class ReportFeatureImpl implements ReportFeatureInterface {
                 inputs.setSwitchStmt( featureExtractor.countSwitchStmt(path));
                 inputs.setLoop(featureExtractor.countLoops(path));
                 INDArray output = classifier.outputClassifier(inputs);
-                System.out.println(prediction.getPrediction(output,isFailable));
+                System.out.println(prediction.getPrediction(output,isFailable,threshold));
             }else{
                 System.out.println("Unable to measure interface: no logic inside");
             }
