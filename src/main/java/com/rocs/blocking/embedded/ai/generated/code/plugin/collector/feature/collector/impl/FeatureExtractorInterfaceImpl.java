@@ -14,6 +14,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static org.nd4j.autodiff.listeners.profiler.data.Phase.e;
+
 /**
  * This handles the Feature extraction
  */
@@ -102,30 +104,20 @@ public class FeatureExtractorInterfaceImpl implements FeatureExtractorInterface 
     }
     @Override
     public int averageMethodLength(Path path){
-        int totalLength = 0;
-        int methodCount = 0;
-
+        BlockStmt body;
+        int aveMethodLength = 0;
         try {
-            CompilationUnit compilationUnit = new JavaParser()
-                    .parse(path)
-                    .getResult()
-                    .orElse(null);
-
-            if (compilationUnit != null) {
-                for (MethodDeclaration method : compilationUnit.findAll(MethodDeclaration.class)) {
-                    BlockStmt body = method.getBody().orElse(null);
-                    if (body != null) {
-                        totalLength += body.findAll(Statement.class).size();
-                        methodCount++;
-                    }
+            CompilationUnit compilationUnit = new JavaParser().parse(path).getResult().orElse(null);
+            for(MethodDeclaration method:compilationUnit.findAll(MethodDeclaration.class)){
+                body = method.getBody().orElse(null);
+                if(body != null) {
+                    aveMethodLength = body.findAll(Statement.class).size();
                 }
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return (methodCount > 0) ? totalLength / methodCount : 0;
+        return aveMethodLength;
     }
     @Override
     public int countSwitchStmt(Path path){
