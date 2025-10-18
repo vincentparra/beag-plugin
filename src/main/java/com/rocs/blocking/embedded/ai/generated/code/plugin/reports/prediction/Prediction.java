@@ -17,7 +17,9 @@ public class Prediction {
         if(probClass1 == 1){
             probClass0 = 0.0;
         }
-
+        if(probClass0 == 1){
+            probClass1 = 0.0;
+        }
         if(predictedClass == 1 && isFailable){
             System.out.println("\n--- Results ---\n" +
                     "Threshold: " + threshold * 100 + "%\n" +
