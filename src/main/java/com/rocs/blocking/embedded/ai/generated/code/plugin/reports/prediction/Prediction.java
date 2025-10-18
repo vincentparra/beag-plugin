@@ -12,8 +12,12 @@ public class Prediction {
     public String getPrediction(INDArray output, boolean isFailable,double threshold) throws MojoFailureException {
         double probClass1 = output.getDouble(0, 1);
         double probClass0 = output.getDouble(0,0);
-//        double threshold = 0.3;
         int predictedClass = probClass1 >= threshold ? 1 : 0;
+
+        if(probClass1 == 1){
+            probClass0 = 0.0;
+        }
+
         if(predictedClass == 1 && isFailable){
             System.out.println("\n--- Results ---\n" +
                     "Threshold: " + threshold * 100 + "%\n" +
