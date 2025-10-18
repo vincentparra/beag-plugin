@@ -102,20 +102,30 @@ public class FeatureExtractorInterfaceImpl implements FeatureExtractorInterface 
     }
     @Override
     public int averageMethodLength(Path path){
-        BlockStmt body;
-        int aveMethodLength = 0;
+        int totalLength = 0;
+        int methodCount = 0;
+
         try {
-            CompilationUnit compilationUnit = new JavaParser().parse(path).getResult().orElse(null);
-            for(MethodDeclaration method:compilationUnit.findAll(MethodDeclaration.class)){
-                body = method.getBody().orElse(null);
-                if(body != null){
-                    aveMethodLength = body.findAll(Statement.class).size();
+            CompilationUnit compilationUnit = new JavaParser()
+                    .parse(path)
+                    .getResult()
+                    .orElse(null);
+
+            if (compilationUnit != null) {
+                for (MethodDeclaration method : compilationUnit.findAll(MethodDeclaration.class)) {
+                    BlockStmt body = method.getBody().orElse(null);
+                    if (body != null) {
+                        totalLength += body.findAll(Statement.class).size();
+                        methodCount++;
+                    }
                 }
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return aveMethodLength;
+
+        return (methodCount > 0) ? totalLength / methodCount : 0;
     }
     @Override
     public int countSwitchStmt(Path path){
