@@ -1,5 +1,5 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.utils;
 
 public class Constant {
-    public static final String MODEL_SAVE = "beag-model-v3.5.bin";
+    public static final String MODEL_SAVE = "beag-model-v3.6.bin";
 }
