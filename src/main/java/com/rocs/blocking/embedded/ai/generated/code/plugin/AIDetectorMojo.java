@@ -1,8 +1,8 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
-import com.rocs.blocking.embedded.ai.generated.code.plugin.collector.path.collector.impl.PathCollectorImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module.collector.path.collector.impl.PathCollectorImpl;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.FileNotFoundException;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.reports.feature.impl.ReportFeatureImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.blocking.module.reports.feature.impl.ReportFeatureImpl;
 import org.apache.maven.api.di.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -11,7 +11,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.jline.utils.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.rocs.blocking.embedded.ai.generated.code.plugin.mlp.utils.Constant.MODEL_SAVE;
 
 /**
  * This class serves as the Mojo for the BEAG plugin that detects {@code AI generated code}

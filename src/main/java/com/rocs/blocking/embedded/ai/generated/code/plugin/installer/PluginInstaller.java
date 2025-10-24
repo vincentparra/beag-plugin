@@ -1,5 +1,6 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin.installer;
 
+import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.FileExistException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,9 @@ public class PluginInstaller {
     public void createYMLFile() throws MojoExecutionException {
         File workflowFile = new File(".github/workflows/beag-plugin.yml");
 
+        if(workflowFile.exists()){
+            throw new FileExistException("file is already exist");
+        }
         try {
             try(FileWriter writer = new FileWriter(workflowFile)){
                 writer.write(WORKFLOW_CONTENT);
