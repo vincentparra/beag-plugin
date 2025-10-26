@@ -47,6 +47,13 @@ Next, include the BEAG plugin under the <build> → <plugins> section of your po
             <groupId>com.github.vincentparra</groupId>
             <artifactId>beag-plugin</artifactId>
             <version>1.0.0</version> <!-- or the latest version -->
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>detect</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
     </plugins>
 </build>`
