@@ -1,5 +1,7 @@
 The Development of BEAG: A GitHub Action Plugin for Identifying Artificial Inteligence Signature in Git Code Commits For Java-based Project
 
+How to use the plugin locally
+
 Step 1: Clone the Branch
 
 Clone this branch to your local machine using:
@@ -23,6 +25,7 @@ Then, run the plugin using Maven commands:
 `beag:detect`
 
 How to use the released version of the plugin
+
 Step 1: Add the JitPack Repository
 
 In your project’s pom.xml, add the JitPack repository inside the <repositories> section (if not already present):
