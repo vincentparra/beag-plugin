@@ -24,10 +24,10 @@ import java.util.List;
 public class ReportFeatureImpl implements ReportFeatureInterface {
     @Override
     public void getReports(List<Path> javaFiles,boolean isFailable, double threshold) throws MojoFailureException, IOException{
-        List<Path> paths = javaFiles;
         int numChar,numToken;
         boolean isInterface;
-        for(Path path: paths){
+
+        for(Path path: javaFiles){
             FeatureExtractorInterface featureExtractor = new FeatureExtractorInterfaceImpl();
             Classifier classifier = new Classifier();
             Prediction prediction = new Prediction();
@@ -45,6 +45,7 @@ public class ReportFeatureImpl implements ReportFeatureInterface {
             System.out.println("Number of Loops        : "+featureExtractor.countLoops(path));
             isInterface = featureExtractor.isInterface(path);
             System.out.println("<--------------------------------------------------------------------------------->");
+
             if(!isInterface){
                 Input inputs = new Input();
                 inputs.setLines(featureExtractor.countNumberOfLines(path));
