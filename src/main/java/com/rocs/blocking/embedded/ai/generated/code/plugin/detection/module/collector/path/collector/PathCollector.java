@@ -13,4 +13,17 @@ public interface PathCollector {
      * @return a list of Path
      */
     List<Path> findPath() throws SourceRootNotFoundException;
+    /**
+     * this set the source root path of the project
+     *
+     * @param sourceRootPath is the path set by the user
+     * */
+    void setSourceRootPath(String sourceRootPath);
+    /**
+     * this set the change file path of the project
+     *
+     * @param changedFiles is the change file path set by the user
+     * */
+    void setChangedFiles(List<String> changedFiles);
+    void setExcludedFiles(List<String> excludedFiles);
 }

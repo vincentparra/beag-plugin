@@ -1,5 +1,6 @@
 package com.rocs.blocking.embedded.ai.generated.code.plugin;
 
+import com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module.collector.path.collector.PathCollector;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module.collector.path.collector.impl.PathCollectorImpl;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.FileNotFoundException;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.blocking.module.reports.feature.impl.ReportFeatureImpl;
@@ -45,15 +46,25 @@ public class AIDetectorMojo extends AbstractMojo {
     @Parameter(property = "threshold", defaultValue = "0.30")
     private double threshold;
 
+    @Parameter(property = "excludedFile")
+    private String excludedFiles;
+
     @Inject
     private ReportFeatureImpl report;
     @Inject
-    private PathCollectorImpl pathFinder;
+    private PathCollector pathFinder;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         pathFinder = new PathCollectorImpl();
         try {
+            if(excludedFiles != null && !excludedFiles.trim().isBlank()){
+                List<String> fileList = Arrays.stream(excludedFiles.split(","))
+                        .map(String::trim)
+                        .toList();
+                LOGGER.info("Excluded files detected: " + fileList);
+                pathFinder.setExcludedFiles(fileList);
+            }
             if (changedFiles != null && !changedFiles.trim().isEmpty()) {
                 List<String> fileList = Arrays.stream(changedFiles.split(","))
                         .map(String::trim)
