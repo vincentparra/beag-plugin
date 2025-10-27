@@ -1,4 +1,4 @@
-The Development of BEAG: A GitHub Action Plugin for Identifying Artificial Inteligence Signature in Git Code Commits For Java-based Project
+# The Development of BEAG Blocking Embedded AI-Generated Code: A GitHub Action Plugin for Identifying Artificial Inteligence Signature in Git Code Commits For Java-based Project
 
 How to use the plugin locally
 ---
