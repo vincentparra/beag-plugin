@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module.mlp.utils.Constant.MODEL_SAVE;
+import static com.rocs.blocking.embedded.ai.generated.code.plugin.util.constant.Constant.MODEL_SAVE;
 
 public class LoadEngineHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoadEngineHelper.class);
