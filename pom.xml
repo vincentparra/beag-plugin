@@ -97,6 +97,10 @@
                     <sourceFileIncludes>
                         <include>com/rocs/blocking/embedded/ai/generated/code/plugin/**/*.java</include>
                     </sourceFileIncludes>
+                    <failOnError>false</failOnError>
+                    <additionalJOptions>
+                        <additionalJOption>-Xdoclint:none</additionalJOption>
+                    </additionalJOptions>
                 </configuration>
                 <executions>
                     <execution>

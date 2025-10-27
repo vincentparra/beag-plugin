@@ -35,7 +35,14 @@ public class Classifier {
         this.loadEngine = new LoadEngineHelper();
         this.model = loadEngine.getModel();
     }
-
+    /**
+     * Generates the model's output (prediction) for the given input features.
+     * This method converts the {@code Input} object into an {@code INDArray}
+     * suitable for inference and returns the raw output from the trained model.
+     *
+     * @param inputs the preprocessed input features to classify
+     * @return an {@code INDArray} containing the model's output or prediction probabilities
+     */
     public INDArray outputClassifier(Input inputs){
         INDArray data = RecordConverter.toArray(transformed(inputs));
         return model.output(data, false);
