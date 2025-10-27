@@ -1,7 +1,7 @@
 The Development of BEAG: A GitHub Action Plugin for Identifying Artificial Inteligence Signature in Git Code Commits For Java-based Project
 
 How to use the plugin locally
-
+---
 ### Step 1: Clone the Branch
 
 Clone this branch to your local machine using:
@@ -9,7 +9,7 @@ Clone this branch to your local machine using:
 ```bash
 git clone https://github.com/vincentparra/beag-plugin.git
 ```
-
+---
 ### Step 2: Build and Install the Plugin
 
 Navigate to the cloned project directory, on the terminal run:
@@ -20,7 +20,7 @@ mvn clean install
 
 
 Wait for the build to complete successfully. This will install the plugin to your local Maven repository.
-
+---
 ### Step 3: Use the Plugin in Your Local Project
 
 In your target project’s pom.xml, add the plugin under the <plugins> section and configure it as needed.
@@ -31,7 +31,7 @@ mvn beag:detect
 ```
 
 ### How to use the released version of the plugin
-
+---
 ### Step 1: Add the JitPack Repository
 
 In your project’s pom.xml, add the JitPack repository inside the <repositories> section (if not already present):
@@ -44,7 +44,7 @@ In your project’s pom.xml, add the JitPack repository inside the <repositories
     </repository>
 </repositories>
 ```
-
+---
 ### Step 2: Add the BEAG Plugin
 
 Next, include the BEAG plugin under the <build> → <plugins> section of your pom.xml:
@@ -67,11 +67,11 @@ Next, include the BEAG plugin under the <build> → <plugins> section of your po
     </plugins>
 </build>
 ```
-
+---
 You can check for the **latest release version** of the plugin here:
  
 [![](https://jitpack.io/v/vincentparra/beag-plugin.svg)](https://jitpack.io/#vincentparra/beag-plugin)
-
+---
 ### Step 3: Run the Plugin
 
 Once added, you can execute the BEAG plugin using the following Maven command:
@@ -79,12 +79,12 @@ Once added, you can execute the BEAG plugin using the following Maven command:
 ```bash 
 mvn beag:detect 
 ```
-
+---
 ## Contributors
-- **Vincent Jovan Parra** — Project Lead, Developer, and Researcher
-- **Melbert Lance Caintic** — Researcher and Implementation Contributor
-- **Vince Sarmiento** — Researcher and Implementation Contributor
-
+- [Vincent Jovan Parra](https://github.com/vincentparra) — Project Lead, Developer, Researcher and Implementation Contributor
+- [Melbert Lance Caintic](https://github.com/lancecaintic) — Researcher and Implementation Contributor
+- [Vince Sarmiento](https://github.com/Vince-1221) — Researcher and Implementation Contributor
+---
 ## Citation
 If you use BEAG in your research or publication, please cite it as:
 
