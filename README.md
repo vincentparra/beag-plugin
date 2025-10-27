@@ -18,7 +18,6 @@ Navigate to the cloned project directory, on the terminal run:
 mvn clean install 
 ```
 
-
 Wait for the build to complete successfully. This will install the plugin to your local Maven repository.
 ---
 ### Step 3: Use the Plugin in Your Local Project
