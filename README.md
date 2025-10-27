@@ -14,7 +14,9 @@ Step 2: Build and Install the Plugin
 
 Navigate to the cloned project directory, on the terminal run:
 
-`mvn clean install`
+```bash 
+mvn clean install 
+```
 
 
 Wait for the build to complete successfully. This will install the plugin to your local Maven repository.
@@ -24,7 +26,9 @@ Wait for the build to complete successfully. This will install the plugin to you
 In your target project’s pom.xml, add the plugin under the <plugins> section and configure it as needed.
 Then, run the plugin using Maven commands:
 
-`mvn beag:detect`
+```bash 
+mvn beag:detect 
+```
 
 ### How to use the released version of the plugin
 
@@ -72,7 +76,9 @@ You can check for the **latest release version** of the plugin here:
 
 Once added, you can execute the BEAG plugin using the following Maven command:
 
-`mvn beag:detect`
+```bash 
+mvn beag:detect 
+```
 
 ## Contributors
 - **Vincent Jovan Parra** — Project Lead, Developer, and Researcher
