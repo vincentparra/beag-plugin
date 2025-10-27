@@ -1,17 +1,12 @@
-package com.rocs.blocking.embedded.ai.generated.code.plugin;
+package com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module;
 
+import com.rocs.blocking.embedded.ai.generated.code.plugin.blocking.module.reports.feature.impl.ReportFeatureImpl;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module.collector.path.collector.PathCollector;
 import com.rocs.blocking.embedded.ai.generated.code.plugin.detection.module.collector.path.collector.impl.PathCollectorImpl;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.exception.FileNotFoundException;
-import com.rocs.blocking.embedded.ai.generated.code.plugin.blocking.module.reports.feature.impl.ReportFeatureImpl;
+import com.rocs.blocking.embedded.ai.generated.code.plugin.mojo.AIDetectorMojo;
 import org.apache.maven.api.di.Inject;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,42 +15,51 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 /**
- * This class serves as the Mojo for the BEAG plugin that detects {@code AI generated code}
- * this class extends with the {@code AbstractMojo} Interface to implement the {@code execute} class
- * making the plugin runnable using this class as an entry point
+ * The {@code PluginDetectionRunner} class serves as the core detection engine for the
+ *  BEAG Maven plugin, responsible for handling file collection, filtering,
+ *  and report generation of potential AI-generated code within a Java-based project.
  * */
-@Mojo(name = "detect", defaultPhase = LifecyclePhase.COMPILE)
-public class AIDetectorMojo extends AbstractMojo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AIDetectorMojo.class);
-
-    @Parameter(defaultValue = "${project}", readonly = true)
-    private MavenProject project;
-
-    @Parameter(property = "changedFiles")
+public class PluginDetectionRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginDetectionRunner.class);
     private String changedFiles;
-
-    @Parameter(property = "sourceRoot",defaultValue = "src/main")
     private String sourceRootPath;
-
-    @Parameter(property = "failOnAi",defaultValue = "true")
     private boolean isFailable;
-
-    @Parameter(property = "threshold", defaultValue = "0.30")
     private double threshold;
-
-    @Parameter(property = "excludedFile")
     private String excludedFiles;
-
     @Inject
     private ReportFeatureImpl report;
     @Inject
     private PathCollector pathFinder;
+    /**
+     * Constructs a new {@code PluginDetectionRunner} instance with the provided configuration parameters.
+     *
+     * @param changedFiles   comma-separated list of modified files to analyze (nullable)
+     * @param sourceRootPath the root path of the source directory
+     * @param isFailable     whether to fail the build if AI-generated code is detected
+     * @param threshold      minimum threshold (0–1.0) for AI detection confidence
+     * @param excludedFiles  comma-separated list of files to exclude from detection
+     */
+    public PluginDetectionRunner(String changedFiles, String sourceRootPath, boolean isFailable, double threshold, String excludedFiles) {
+        this.changedFiles = changedFiles;
+        this.sourceRootPath = sourceRootPath;
+        this.isFailable = isFailable;
+        this.threshold = threshold;
+        this.excludedFiles = excludedFiles;
+    }
+    /**
+     * Public wrapper method for initiating the plugin's detection routine.
+     *
+     * This method delegates execution to {@code pluginRunner()}, providing an entry point for external callers.
+     *
+     * @throws MojoExecutionException if a runtime or configuration error occurs
+     * @throws MojoFailureException   if detection results trigger a build failure
+     */
+    public void getPluginRunner() throws MojoExecutionException, MojoFailureException {
+        pluginRunner();
+    }
 
-    @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    private void pluginRunner() throws MojoExecutionException, MojoFailureException {
         pathFinder = new PathCollectorImpl();
         try {
             if(excludedFiles != null && !excludedFiles.trim().isBlank()){

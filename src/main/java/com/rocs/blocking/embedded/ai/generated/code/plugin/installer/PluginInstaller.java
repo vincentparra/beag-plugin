@@ -9,49 +9,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static com.rocs.blocking.embedded.ai.generated.code.plugin.util.constant.Constant.WORKFLOW_CONTENT;
+
+/**
+ * The {@code PluginInstaller} is responsible for generating
+ * the default GitHub Actions workflow file used by the BEAG Maven plugin.
+ * */
 public class PluginInstaller {
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginInstaller.class);
-    private static final String WORKFLOW_CONTENT = "name: BEAG\n" +
-            "\n" +
-            "on:\n" +
-            "  pull_request:\n" +
-            "    branches: [ \"master\" ]\n" +
-            "\n" +
-            "jobs:\n" +
-            "  scan:\n" +
-            "    runs-on: ubuntu-latest\n" +
-            "\n" +
-            "    steps:\n" +
-            "      - name: Checkout code\n" +
-            "        uses: actions/checkout@v4\n" +
-            "        with:\n" +
-            "          fetch-depth: 0\n" +
-            "\n" +
-            "      - name: Set up JDK 21\n" +
-            "        uses: actions/setup-java@v4\n" +
-            "        with:\n" +
-            "          java-version: '21'\n" +
-            "          distribution: 'temurin'\n" +
-            "          cache: maven\n" +
-            "\n" +
-            "      - name: Get changed files\n" +
-            "        id: changed-files\n" +
-            "        run: |\n" +
-            "          BASE_SHA=\"${{ github.event.pull_request.base.sha }}\"\n" +
-            "          HEAD_SHA=\"${{ github.event.pull_request.head.sha }}\"\n" +
-            "          echo \"Base SHA: $BASE_SHA\"\n" +
-            "          echo \"Head SHA: $HEAD_SHA\"\n" +
-            "\n" +
-            "          CHANGED_FILES=$(git diff --name-only --diff-filter=ACMR \"$BASE_SHA\" \"$HEAD_SHA\" | paste -sd \",\" -)\n" +
-            "          echo \"Changed files (excluding deleted): $CHANGED_FILES\"\n" +
-            "\n" +
-            "          echo \"CHANGED_FILES=$CHANGED_FILES\" >> $GITHUB_ENV\n" +
-            "\n" +
-            "      - name: Run BEAG on changed files only\n" +
-            "        run: |\n" +
-            "          echo \"Running BEAG with changed files: $CHANGED_FILES\"\n" +
-            "          mvn beag:detect -DchangedFiles=\"$CHANGED_FILES\"\n";
 
+    /**
+     * Creates the default BEAG GitHub Actions workflow YAML file.
+     *
+     * @throws MojoExecutionException if an I/O or file creation error occurs
+     * @throws FileExistException if the workflow file already exists in the project directory
+     */
     public void createYMLFile() throws MojoExecutionException {
         File workflowFile = new File(".github/workflows/beag-plugin.yml");
 
