@@ -29,7 +29,7 @@ public class Classifier {
      * This constructor attempts to retrieve a model binary file,
      * creates a temporary file to store its contents, and then restores a {@link org.deeplearning4j.nn.multilayer.MultiLayerNetwork}
      * instance from it. Additionally, it extracts associated analysis and schema metadata embedded in the model file.
-
+     * @throws IOException if the model file cannot be loaded
      */
     public Classifier() throws IOException {
         this.loadEngine = new LoadEngineHelper();
