@@ -2,7 +2,7 @@ The Development of BEAG: A GitHub Action Plugin for Identifying Artificial Intel
 
 How to use the plugin locally
 
-### 1: Clone the Branch
+### Step 1: Clone the Branch
 
 Clone this branch to your local machine using:
 
@@ -10,7 +10,7 @@ Clone this branch to your local machine using:
 git clone https://github.com/vincentparra/beag-plugin.git
 ```
 
-Step 2: Build and Install the Plugin
+### Step 2: Build and Install the Plugin
 
 Navigate to the cloned project directory, on the terminal run:
 
