@@ -79,8 +79,7 @@ public class AIDetectorMojo extends AbstractMojo {
             List<Path> javaFiles = pathFinder.findPath();
 
             if (javaFiles.isEmpty()) {
-                LOGGER.warn("No Java files found to scan.");
-                throw new FileNotFoundException("No Java files found to scan.");
+                LOGGER.warn("No Java files to scan, skipping detection");
             }
 
             LOGGER.info("Found " + javaFiles.size() + " Java file(s) to analyze.");
