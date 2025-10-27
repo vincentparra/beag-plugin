@@ -6,11 +6,11 @@ Step 1: Clone the Branch
 
 Clone this branch to your local machine using:
 
-`git clone <repository-url> -b <branch-name>`
+`git clone https://github.com/vincentparra/beag-plugin.git`
 
 Step 2: Build and Install the Plugin
 
-Navigate to the cloned project directory, then run:
+Navigate to the cloned project directory, on the terminal run:
 
 `mvn clean install`
 
@@ -22,7 +22,7 @@ Step 3: Use the Plugin in Your Local Project
 In your target project’s pom.xml, add the plugin under the <plugins> section and configure it as needed.
 Then, run the plugin using Maven commands:
 
-`beag:detect`
+`mvn beag:detect`
 
 How to use the released version of the plugin
 
@@ -46,7 +46,7 @@ Next, include the BEAG plugin under the <build> → <plugins> section of your po
         <plugin>
             <groupId>com.github.vincentparra</groupId>
             <artifactId>beag-plugin</artifactId>
-            <version>1.0.0</version> <!-- or the latest version -->
+            <version>1.0.0</version>                <!-- or the latest version -->
             <executions>
                 <execution>
                     <goals>
