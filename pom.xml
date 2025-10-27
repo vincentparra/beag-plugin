@@ -70,6 +70,48 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--generate JAVADOCs, can run this also using: mvn javadoc:javadoc-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <outputDirectory>build/docs</outputDirectory>
+                    <reportOutputDirectory>${project.reporting.outputDirectory}/javadoc</reportOutputDirectory>
+                    <destDir>javadoc</destDir>
+                    <windowtitle>Blocking Embedded AI-Generated Code Documentation</windowtitle>
+                    <doctitle><![CDATA[Blocking Embedded AI-Generated Code Documentation - ${project.version}]]></doctitle>
+                    <top><![CDATA[Blocking Embedded AI-Generated Code Documentation - ${project.version}]]></top>
+                    <bottom><![CDATA[Copyright © ${maven.build.timestamp.format.yyyy}. All Rights Reserved.]]></bottom>
+                    <groups>
+                        <group>
+                            <title>AI Blocking Module</title>
+                            <packages>com.rocs.blocking.embedded.ai.generated.code.plugin.blocking.module.reports.*</packages>
+                        </group>
+                        <group>
+                            <title>AI Detection Module</title>
+                            <packages>com.rocs.blocking.embedded.ai.generated.code.plugin.detection.*</packages>
+                        </group>
+                    </groups>
+                    <sourceFileIncludes>
+                        <include>com/rocs/blocking/embedded/ai/generated/code/plugin/**/*.java</include>
+                    </sourceFileIncludes>
+                    <failOnError>false</failOnError>
+                    <additionalJOptions>
+                        <additionalJOption>-Xdoclint:none</additionalJOption>
+                    </additionalJOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-javadoc</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

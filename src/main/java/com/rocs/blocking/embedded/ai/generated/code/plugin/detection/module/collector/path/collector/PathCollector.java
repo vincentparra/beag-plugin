@@ -20,10 +20,16 @@ public interface PathCollector {
      * */
     void setSourceRootPath(String sourceRootPath);
     /**
-     * this set the change file path of the project
+     * this set the list of change file path of the project
      *
-     * @param changedFiles is the change file path set by the user
+     * @param changedFiles is the list of file change file path set by the user
      * */
     void setChangedFiles(List<String> changedFiles);
+    /**
+     * Sets the list of file names or paths that should be excluded
+     * from the path collection process.
+     *
+     * @param excludedFiles a list of file names or patterns to ignore during path collection
+     */
     void setExcludedFiles(List<String> excludedFiles);
 }
